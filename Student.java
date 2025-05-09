@@ -4,10 +4,10 @@
  */
 package Student;
 
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.Map;
 
-public class Student {
+public class Student {                //(Class of Moaaz)
     private final String studentId;  // Made final since ID shouldn't change
     private String name;
     private final Map<String, Double> marks; // Subject -> Marks
