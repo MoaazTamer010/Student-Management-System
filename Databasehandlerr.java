@@ -25,15 +25,15 @@ public class JavaDb {
     private void initializeDatabase() throws SQLException {
         try (Statement stmt = connection.createStatement()) {
             stmt.execute("CREATE TABLE IF NOT EXISTS students (" +
-                       "student_id INTEGER PRIMARY KEY, " +
+                       "student_id INTEGER(6) PRIMARY KEY, " +
                        "name VARCHAR(100) NOT NULL, " +
                        "grade VARCHAR(1))");
             
             stmt.execute("CREATE TABLE IF NOT EXISTS marks (" +
                        "record_id INTEGER AUTO_INCREMENT PRIMARY KEY, " +
                        "student_id INTEGER, " +
-                       "subject VARCHAR(50) NOT NULL, " +
-                       "mark DECIMAL(5,2) NOT NULL, " +
+                    
+                       "marks int(3) NOT NULL, " +
                        "FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE)");
         }
     }
