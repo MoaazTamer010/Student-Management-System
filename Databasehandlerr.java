@@ -4,9 +4,7 @@ import java.sql.*;
  *
  * @author Mohamed
  */
-public class Databasehandlerr {
 
- public class JavaDB {
 
 
 public class JavaDb {
