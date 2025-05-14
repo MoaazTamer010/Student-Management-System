@@ -1,6 +1,10 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
 package istudentmanagementsystem;
 
+import istudentmanagementsystem.JavaDb;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
@@ -9,11 +13,15 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author Mergawy
+ */
 public class IStudentManagementSystem extends JFrame{
 private JTextField idField;
 private JTextField nameField;
 private JButton addButton;
-private Databasehandlerr database;
+private JavaDb database;
 
 public IStudentManagementSystem(){
     setTitle("Student Managment System");
@@ -38,7 +46,7 @@ public IStudentManagementSystem(){
     
     try{
         Connection conn=DriverManager.getConnection("jdbc:sqlite:students.db");
-        database=new Databasehandlerr(conn);
+        database=new JavaDb(conn);
         StudentManagementSystem studentManagementSystem = new StudentManagementSystem(database);
     }
     catch(SQLException e){
@@ -76,7 +84,7 @@ JOptionPane.showMessageDialog(this,"Error"+ e.getMessage());
     
     
     
-}
+
     /**
      * @param args the command line arguments
      */
@@ -86,5 +94,4 @@ IStudentManagementSystem gui =new IStudentManagementSystem();
 gui.setVisible(true);
  });
 }
-
-   
+}
