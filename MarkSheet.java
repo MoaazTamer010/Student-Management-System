@@ -6,7 +6,8 @@ public class MarkSheet {
     private final Student student;
     private double totalMarks;
     private double averageMarks;
-
+    private int marks;
+    
     public MarkSheet(Student student) {
         this.student = student;
         calculateTotals();
@@ -26,6 +27,13 @@ public class MarkSheet {
         calculateTotals();
     }
 
+    public void setMarks(int marks) {
+    if (marks < 0 || marks > 100) {
+        throw new IllegalArgumentException("Marks must be 0-100");
+    }
+    this.marks = marks;
+    }
+    
     public void display() {
         System.out.println("\n========= Mark Sheet =========");
         System.out.println("Student ID  : " + student.getStudentId());
