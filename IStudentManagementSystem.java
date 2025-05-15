@@ -7,6 +7,8 @@ package istudentmanagementsystem;
 import istudentmanagementsystem.JavaDb;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -61,46 +63,60 @@ public IStudentManagementSystem(){
         JOptionPane.showMessageDialog(this,"Database Error: "+e.getMessage());
         System.exit(1);   
     }
-    addButton.addActionListener(e-> {
+    addButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
         try {
-        addStudent();
-        } 
-        catch (SQLException ex) {
+            addStudent();
+        } catch (SQLException ex) {
             Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
-    });
-    searchButton.addActionListener(e -> {
+    }
+});
+
+searchButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
         try {
             searchStudent();
-        } 
-        catch (SQLException ex) {
-                Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
-    });
-    updateButton.addActionListener(e -> {
+    }
+});
+
+updateButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
         try {
             updateStudent();
-        } 
-        catch (SQLException ex) {
-                Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
-    });
-    deleteButton.addActionListener(e -> {
+    }
+});
+
+deleteButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
         try {
             deleteStudent();
-        } 
-        catch (SQLException ex) {
-                Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
-    });
-    markSheetButton.addActionListener(e -> {
+    }
+});
+
+markSheetButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
         try {
             generateMarkSheet();
+        } catch (SQLException ex) {
+            Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
-        catch (SQLException ex) {
-                Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    });
+    }
+});
 }
     private void addStudent() throws SQLException{
 try{
@@ -178,8 +194,8 @@ JOptionPane.showMessageDialog(this, "Student ID must be a number");
     }
     int marks = database.getMarks(id);
     student.setMarks(marks);
-    MarkSheet ms = new MarkSheet();
-    String result = ms.generate(student);
+    MarkSheet ms = new MarkSheet(student);
+    String result = ms.generate();
     JOptionPane.showMessageDialog(this, result);
         }
     catch (NumberFormatException e) {
