@@ -4,7 +4,6 @@
  */
 package istudentmanagementsystem;
 
-import istudentmanagementsystem.JavaDb;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -55,9 +54,11 @@ public IStudentManagementSystem(){
     add(pnl);
     
     try{
-        Connection conn=DriverManager.getConnection("jdbc:sqlite:students.db");
-        database=new JavaDb(conn);
-        StudentManagementSystem studentManagementSystem = new StudentManagementSystem(database);
+        String url = "jdbc:mysql://localhost:3309/istudent_db"; 
+        String user = "root"; 
+        String password = ""; 
+        java.sql.Connection conn = java.sql.DriverManager.getConnection(url, user, password);
+        database = new JavaDb(conn);
     }
     catch(SQLException e){
         JOptionPane.showMessageDialog(this,"Database Error: "+e.getMessage());
@@ -193,6 +194,7 @@ JOptionPane.showMessageDialog(this, "Student ID must be a number");
         return;
     }
     int marks = database.getMarks(id);
+    
     student.setMarks(marks);
     MarkSheet ms = new MarkSheet(student);
     String result = ms.generate();
