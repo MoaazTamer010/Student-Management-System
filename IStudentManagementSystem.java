@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -194,7 +192,6 @@ JOptionPane.showMessageDialog(this, "Student ID must be a number");
         return;
     }
     int marks = database.getMarks(id);
-    
     student.setMarks(marks);
     MarkSheet ms = new MarkSheet(student);
     String result = ms.generate();
