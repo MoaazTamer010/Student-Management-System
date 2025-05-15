@@ -20,12 +20,12 @@ import java.util.logging.Logger;
 public class IStudentManagementSystem extends JFrame{
 private JTextField idField;
 private JTextField nameField;
-private JButton addButton;
+private JButton addButton ,searchButton, updateButton, deleteButton, markSheetButton ;
 private JavaDb database;
 
 public IStudentManagementSystem(){
     setTitle("Student Managment System");
-    setSize(400,200);
+    setSize(500,300);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLocationRelativeTo(null);
     
@@ -34,14 +34,22 @@ public IStudentManagementSystem(){
     idField=new JTextField(16);
     nameField=new JTextField(28);
     addButton=new JButton("Add Student");
+    searchButton=new JButton("Search Student");
+    updateButton = new JButton("Update Student");
+    deleteButton = new JButton("Delete Student");
+    markSheetButton = new JButton("Generate Mark Sheet");
     
-    JPanel pnl=new JPanel(new GridLayout(3,2,10,10));
+    JPanel pnl=new JPanel(new GridLayout(6,2,10,10));
     pnl.add(idLabel);
     pnl.add(idField);
     pnl.add(nameLabel);
     pnl.add(nameField);
     pnl.add(new JLabel());
     pnl.add(addButton);
+    pnl.add(searchButton);
+    pnl.add(updateButton);
+    pnl.add(deleteButton);
+    pnl.add(markSheetButton);
     add(pnl);
     
     try{
@@ -55,24 +63,57 @@ public IStudentManagementSystem(){
     }
     addButton.addActionListener(e-> {
         try {
-addStudent();
-        } catch (SQLException ex) {
+        addStudent();
+        } 
+        catch (SQLException ex) {
             Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    });
+    searchButton.addActionListener(e -> {
+        try {
+            searchStudent();
+        } 
+        catch (SQLException ex) {
+                Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    });
+    updateButton.addActionListener(e -> {
+        try {
+            updateStudent();
+        } 
+        catch (SQLException ex) {
+                Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    });
+    deleteButton.addActionListener(e -> {
+        try {
+            deleteStudent();
+        } 
+        catch (SQLException ex) {
+                Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    });
+    markSheetButton.addActionListener(e -> {
+        try {
+            generateMarkSheet();
+        }
+        catch (SQLException ex) {
+                Logger.getLogger(IStudentManagementSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
     });
 }
     private void addStudent() throws SQLException{
 try{
-int id=Integer.parseInt(idField.getText());
-String name=nameField.getText().trim();
-if (name.isEmpty()){
-JOptionPane.showMessageDialog(this,"Name cannot be empty.");
-return;
-}
-database.addStudent(id,name);
-JOptionPane.showMessageDialog(this,"Student added successfully!");
-idField.setText("");
-nameField.setText("");
+    int id=Integer.parseInt(idField.getText());
+    String name=nameField.getText().trim();
+    if (name.isEmpty()){
+        JOptionPane.showMessageDialog(this,"Name cannot be empty.");
+        return;
+    }
+    database.addStudent(id,name);
+    JOptionPane.showMessageDialog(this,"Student added successfully!");
+    idField.setText("");
+    nameField.setText("");
 }
 catch (NumberFormatException e){
 JOptionPane.showMessageDialog(this,"Student ID must be a number");
@@ -81,8 +122,71 @@ catch(HeadlessException e){
 JOptionPane.showMessageDialog(this,"Error"+ e.getMessage());
 }
 }
+    private void searchStudent() throws SQLException {
+    try {
+    int id = Integer.parseInt(idField.getText());
+    Student student = database.getStudentById(id);
+    if (student != null) {
+        nameField.setText(student.getName());
+        JOptionPane.showMessageDialog(this, "Student Found: " + student.getName());
+    }
+    else {
+        JOptionPane.showMessageDialog(this, "Student not found.");
+         }
+        } 
+catch (NumberFormatException e) {
+JOptionPane.showMessageDialog(this, "Student ID must be a number");
+        }
+    }
+
+    private void updateStudent() throws SQLException {
+    try {
+    int id = Integer.parseInt(idField.getText());
+    String newName = nameField.getText().trim();
+    if (newName.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Name cannot be empty.");
+        return;
+            }
+    database.updateStudent(id, newName);
+    JOptionPane.showMessageDialog(this, "Student updated successfully!");
+        } 
+catch (NumberFormatException e) {
+JOptionPane.showMessageDialog(this, "Student ID must be a number");
+        }
+    }
+
+    private void deleteStudent() throws SQLException {
+    try {
+    int id = Integer.parseInt(idField.getText());
+    database.deleteStudent(id);
+    JOptionPane.showMessageDialog(this, "Student deleted successfully!");
+    idField.setText("");
+    nameField.setText("");
+        }
+    catch (NumberFormatException e) {
+    JOptionPane.showMessageDialog(this, "Student ID must be a number");
+        }
+    }
+
+    private void generateMarkSheet() throws SQLException {
+    try {
+    int id = Integer.parseInt(idField.getText());
+    Student student = database.getStudentById(id);
+    if (student == null) {
+        JOptionPane.showMessageDialog(this, "Student not found.");
+        return;
+    }
+    int marks = database.getMarks(id);
+    student.setMarks(marks);
+    MarkSheet ms = new MarkSheet();
+    String result = ms.generate(student);
+    JOptionPane.showMessageDialog(this, result);
+        }
+    catch (NumberFormatException e) {
+    JOptionPane.showMessageDialog(this, "Student ID must be a number");
+        }
     
-    
+    }
     
 
     /**
