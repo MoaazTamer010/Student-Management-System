@@ -7,7 +7,7 @@ public class MarkSheet {       // class of Remas
     private final Student student;
     private double totalMarks;
     private double averageMarks;
-    private int marks;
+    public int marks;
     
     public MarkSheet(Student student) {
         this.student = student;
