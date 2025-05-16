@@ -1,17 +1,24 @@
+
 package istudentmanagementsystem;
 
 import java.util.Map;
 
 
-public class MarkSheet {       // class of Remas
-    private final Student student;
+public class MarkSheet {
+    
+   
+    public final Student student;
     private double totalMarks;
     private double averageMarks;
-    public int marks;
+    public double marks;
     
     public MarkSheet(Student student) {
         this.student = student;
         calculateTotals();
+    }
+
+    MarkSheet(JavaDb.Student student) {
+        this.student = null;
     }
 
     private void calculateTotals() {
@@ -23,7 +30,7 @@ public class MarkSheet {       // class of Remas
         averageMarks = marks.isEmpty() ? 0.0 : totalMarks / marks.size();
     }
 
-    public void generate() {
+    public void generate(Student student1) {
         student.calculateGrade();  // Ensure grade is up to date
         calculateTotals();
     }
