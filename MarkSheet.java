@@ -1,8 +1,9 @@
+package istudentmanagementsystem;
 
 import java.util.Map;
 
 
-public class MarkSheet {
+public class MarkSheet {       // class of Remas
     private final Student student;
     private double totalMarks;
     private double averageMarks;
