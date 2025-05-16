@@ -11,7 +11,7 @@ A desktop application to manage student academic records efficiently using Java,
 
 *Technologies Used:
 -Java – Core logic and object-oriented structure
--GUI – Java Swing or JavaFX for user-friendly interfaces
+-GUI – Java Swing for user-friendly interfaces
 -Database – To store and retrieve student data persistently
 
 *Key Modules:
