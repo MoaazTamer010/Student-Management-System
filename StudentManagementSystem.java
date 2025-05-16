@@ -56,8 +56,12 @@ public class StudentManagementSystem {
             String name = scanner.nextLine();
             database.addStudent(id, name);
             System.out.println("Student added successfully!");
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             System.out.println("Error adding student: " + e.getMessage());
+        }
+        catch (SQLException e ) {
+            System.out.println("Error");
         }
     }
 
@@ -69,8 +73,12 @@ public class StudentManagementSystem {
             String grade = scanner.nextLine().toUpperCase();
             database.updateGrade(id, grade);
             System.out.println("Grade updated successfully!");
-        } catch (NumberFormatException e) {
+        } 
+        catch (NumberFormatException e) {
             System.out.println("Error updating grade: " + e.getMessage());
+        }
+        catch (SQLException e ) {
+            System.out.println("Error");
         }
     }
 
