@@ -1,8 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package javadb;
+
+package istudentmanagementsystem;
 
 /**
  *
@@ -12,10 +9,10 @@ package javadb;
 
 import java.sql.*;
 
-public class JavaDB {
+public class JavaDb {
     private final Connection connection;
 
-    public JavaDB(Connection connection) throws SQLException {
+    public JavaDb(Connection connection) throws SQLException {
         this.connection = connection;
         initializeDatabase();
     }
@@ -43,6 +40,9 @@ public class JavaDB {
             pstmt.setString(2, name);
             pstmt.executeUpdate();
         }
+        catch (SQLException e ) {
+            System.out.println("Error");
+        }
     }
 
     public void updateGrade(int studentId, String grade) throws SQLException {
@@ -51,6 +51,9 @@ public class JavaDB {
             pstmt.setString(1, grade);
             pstmt.setInt(2, studentId);
             pstmt.executeUpdate();
+        }
+        catch (SQLException e ) {
+            System.out.println("Error");
         }
     }
 
