@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package istudentmanagementsystem;
 
 import javax.swing.*;
@@ -12,11 +8,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Mergawy
- */
-public class IStudentManagementSystem extends JFrame{
+public class IStudentManagementSystem extends JFrame{        // class of Mohaned
 private JTextField idField;
 private JTextField nameField;
 private JButton addButton ,searchButton, updateButton, deleteButton, markSheetButton ;
