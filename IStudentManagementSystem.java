@@ -188,7 +188,7 @@ JOptionPane.showMessageDialog(this, "Student ID must be a number");
     private void generateMarkSheet() throws SQLException {
     try {
     int id = Integer.parseInt(idField.getText());
-    Student student = database.getStudentById(id);
+    JavaDb.Student student = database.getStudentById(id);
     if (student == null) {
         JOptionPane.showMessageDialog(this, "Student not found.");
         return;
