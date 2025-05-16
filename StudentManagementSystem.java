@@ -98,7 +98,8 @@ public class StudentManagementSystem {        // class of Mariam
                         rs.getString("grade"));
             }
             System.out.println("------------------------\n");
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println("Error displaying students: " + e.getMessage());
         }
     }
