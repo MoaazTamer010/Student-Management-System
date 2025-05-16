@@ -1,22 +1,17 @@
 package istudentmanagementsystem;
 
-/**
-*
-* @author Mohamed 
-*/  
-
-
 import java.sql.*;
 
-public class JavaDB {
+public class JavaDb {
+    
     private final Connection connection;
 
-    public JavaDB(Connection connection) throws SQLException {
+    public JavaDb(Connection connection) throws SQLException {
         this.connection = connection;
         initializeDatabase();
     }
 
-    private void initializeDatabase() throws SQLException {
+     private void initializeDatabase() throws SQLException {
         try (Statement stmt = connection.createStatement()) {
             stmt.execute("CREATE TABLE IF NOT EXISTS students (" +
                        "student_id INTEGER(6) PRIMARY KEY, " +
@@ -31,7 +26,7 @@ public class JavaDB {
         }
     }
 
-    public void addStudent(int id, String name) throws SQLException {
+    public void addStudent(int id, String name, double mark) throws SQLException {
         String sql = "INSERT INTO students (student_id, name) VALUES (?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -55,7 +50,8 @@ public class JavaDB {
         }
     }
 
-    public void updateStudent(int id, String newName) throws SQLException {
+   
+    public void updateStudent(int id, String newName, String newMark) throws SQLException {
         String sql = "UPDATE students SET name = ? WHERE student_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, newName);
@@ -84,7 +80,7 @@ public class JavaDB {
         }
     }
 
-    public void setMarks(int studentId, int marks) throws SQLException {
+    public void setMarks(int studentId, double marks) throws SQLException {
         // First check if marks record exists for this student
         String checkSql = "SELECT record_id FROM marks WHERE student_id = ?";
         try (PreparedStatement checkStmt = connection.prepareStatement(checkSql)) {
@@ -95,7 +91,7 @@ public class JavaDB {
                 // Update existing marks
                 String updateSql = "UPDATE marks SET marks = ? WHERE student_id = ?";
                 try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
-                    updateStmt.setInt(1, marks);
+                    updateStmt.setDouble(1, (double) marks);
                     updateStmt.setInt(2, studentId);
                     updateStmt.executeUpdate();
                 }
@@ -104,7 +100,7 @@ public class JavaDB {
                 String insertSql = "INSERT INTO marks (student_id, marks) VALUES (?, ?)";
                 try (PreparedStatement insertStmt = connection.prepareStatement(insertSql)) {
                     insertStmt.setInt(1, studentId);
-                    insertStmt.setInt(2, marks);
+                    insertStmt.setDouble(2, marks);
                     insertStmt.executeUpdate();
                 }
             }
