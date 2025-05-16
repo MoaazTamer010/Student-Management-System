@@ -1,5 +1,7 @@
 package istudentmanagementsystem;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Student {
@@ -7,6 +9,7 @@ public class Student {
     private String name;
     private double averageMark;
     private String grade;
+    private final Map<String, Double> marks = new HashMap<>();
 
     public Student(String studentId, String name) {
         this.studentId = Objects.requireNonNull(studentId, "Student ID cannot be null");
@@ -15,7 +18,23 @@ public class Student {
         this.grade = "N/A";
     }
 
-    // Set the student's overall average mark
+    public void setMarks(Map<String, Double> marks) {
+        if (marks == null || marks.isEmpty()) {
+            throw new IllegalArgumentException("Marks map cannot be null or empty");
+        }
+        this.marks.clear();
+        for (Map.Entry<String, Double> entry : marks.entrySet()) {
+            validateMark(entry.getValue());
+            this.marks.put(entry.getKey(), entry.getValue());
+        }
+        recalculateAverageAndGrade();
+    }
+
+    public Map<String, Double> getMarks() {
+        return new HashMap<>(marks);
+    }
+
+    // Set the student's overall average mark manually
     public void setAverageMark(double averageMark) {
         validateMark(averageMark);
         this.averageMark = averageMark;
@@ -37,7 +56,16 @@ public class Student {
         }
     }
 
-    // Validation methods
+    private void recalculateAverageAndGrade() {
+        if (marks.isEmpty()) {
+            averageMark = 0.0;
+            grade = "N/A";
+            return;
+        }
+        averageMark = marks.values().stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+        calculateGrade();
+    }
+
     private String validateName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Name cannot be empty");
@@ -56,6 +84,7 @@ public class Student {
     public String getName() { return name; }
     public double getAverageMark() { return averageMark; }
     public String getGrade() { return grade; }
+    
 
     // Setter
     public void setName(String name) {
