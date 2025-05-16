@@ -3,10 +3,8 @@ package istudentmanagementsystem;
 
 import java.util.Map;
 
-
 public class MarkSheet {
-    
-   
+
     public final Student student;
     private double totalMarks;
     private double averageMarks;
@@ -30,9 +28,10 @@ public class MarkSheet {
         averageMarks = marks.isEmpty() ? 0.0 : totalMarks / marks.size();
     }
 
-    public void generate(Student student1) {
+    public double generate() {
         student.calculateGrade();  // Ensure grade is up to date
         calculateTotals();
+        return averageMarks;
     }
 
     public void setMarks(int marks) {
