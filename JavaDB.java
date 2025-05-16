@@ -8,10 +8,10 @@ package istudentmanagementsystem;
 
 import java.sql.*;
 
-public class JavaDb {
+public class JavaDB {
     private final Connection connection;
 
-    public JavaDb(Connection connection) throws SQLException {
+    public JavaDB(Connection connection) throws SQLException {
         this.connection = connection;
         initializeDatabase();
     }
