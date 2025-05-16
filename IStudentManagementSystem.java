@@ -123,7 +123,7 @@ try{
         JOptionPane.showMessageDialog(this,"Name and Mark cannot be empty.");
         return;
     }
-    database.addStudent(id,name,mark);
+    database.addStudent(id, name, mark);
     JOptionPane.showMessageDialog(this,"Student added successfully!");
     idField.setText("");
     nameField.setText("");
@@ -139,10 +139,10 @@ JOptionPane.showMessageDialog(this,"Error"+ e.getMessage());
     private void searchStudent() throws SQLException {
     try {
     int id = Integer.parseInt(idField.getText());
-    Student student = database.getStudentById(id);
+    JavaDb.Student student = database.getStudentById(id);
     if (student != null) {
         nameField.setText(student.getName());
-        markField.setText(student.getMark());
+        markField.setText(student.getMarks());
         JOptionPane.showMessageDialog(this, "Student Found: " + student.getName());
     }
     else {
@@ -215,5 +215,5 @@ JOptionPane.showMessageDialog(this, "Student ID must be a number");
 IStudentManagementSystem gui =new IStudentManagementSystem();
 gui.setVisible(true);
  });
-}
+    }
 }
