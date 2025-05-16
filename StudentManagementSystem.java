@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class StudentManagementSystem {
+public class StudentManagementSystem {        // class of Mariam
     private final JavaDb database;
     private final Scanner scanner;
     private String adminPassword = "admin123"; // Default password
