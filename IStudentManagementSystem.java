@@ -183,7 +183,7 @@ JOptionPane.showMessageDialog(this, "Student ID must be a number");
         JOptionPane.showMessageDialog(this, "Student not found.");
         return;
     }
-    int marks = database.getMarks(id);
+    double marks = database.getMarks(id);
     student.setMarks(marks);
     MarkSheet ms = new MarkSheet(student);
     String result = ms.generate();
