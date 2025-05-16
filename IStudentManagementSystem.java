@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 public class IStudentManagementSystem extends JFrame{        // class of Mohaned
 private JTextField idField;
 private JTextField nameField;
+private JTextField markField;
 private JButton addButton ,searchButton, updateButton, deleteButton, markSheetButton ;
 private JavaDb database;
 
@@ -22,19 +23,23 @@ public IStudentManagementSystem(){
     
     JLabel idLabel = new JLabel("Student ID: ");
     JLabel nameLabel = new JLabel("Name: ");
+    JLabel markLabel = new JLabel("Mark: ");
     idField=new JTextField(16);
     nameField=new JTextField(28);
+    markField=new JTextField(10);
     addButton=new JButton("Add Student");
     searchButton=new JButton("Search Student");
     updateButton = new JButton("Update Student");
     deleteButton = new JButton("Delete Student");
     markSheetButton = new JButton("Generate Mark Sheet");
     
-    JPanel pnl=new JPanel(new GridLayout(6,2,10,10));
+    JPanel pnl=new JPanel(new GridLayout(7,2,10,10));
     pnl.add(idLabel);
     pnl.add(idField);
     pnl.add(nameLabel);
     pnl.add(nameField);
+    pnl.add(markLabel);
+    pnl.add(markField);
     pnl.add(new JLabel());
     pnl.add(addButton);
     pnl.add(searchButton);
@@ -113,14 +118,16 @@ markSheetButton.addActionListener(new ActionListener() {
 try{
     int id=Integer.parseInt(idField.getText());
     String name=nameField.getText().trim();
-    if (name.isEmpty()){
-        JOptionPane.showMessageDialog(this,"Name cannot be empty.");
+    String mark=markField.getText().trim();
+    if (name.isEmpty() || mark.isEmpty()){
+        JOptionPane.showMessageDialog(this,"Name and Mark cannot be empty.");
         return;
     }
-    database.addStudent(id,name);
+    database.addStudent(id,name,mark);
     JOptionPane.showMessageDialog(this,"Student added successfully!");
     idField.setText("");
     nameField.setText("");
+    markField.setText("");
 }
 catch (NumberFormatException e){
 JOptionPane.showMessageDialog(this,"Student ID must be a number");
@@ -135,6 +142,7 @@ JOptionPane.showMessageDialog(this,"Error"+ e.getMessage());
     Student student = database.getStudentById(id);
     if (student != null) {
         nameField.setText(student.getName());
+        markField.setText(student.getMark());
         JOptionPane.showMessageDialog(this, "Student Found: " + student.getName());
     }
     else {
@@ -150,11 +158,12 @@ JOptionPane.showMessageDialog(this, "Student ID must be a number");
     try {
     int id = Integer.parseInt(idField.getText());
     String newName = nameField.getText().trim();
-    if (newName.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Name cannot be empty.");
+    String newMark = markField.getText().trim();
+    if (newName.isEmpty() || newMark.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Name and Mark cannot be empty.");
         return;
             }
-    database.updateStudent(id, newName);
+    database.updateStudent(id, newName, newMark);
     JOptionPane.showMessageDialog(this, "Student updated successfully!");
         } 
 catch (NumberFormatException e) {
@@ -169,6 +178,7 @@ JOptionPane.showMessageDialog(this, "Student ID must be a number");
     JOptionPane.showMessageDialog(this, "Student deleted successfully!");
     idField.setText("");
     nameField.setText("");
+    markField.setText("");
         }
     catch (NumberFormatException e) {
     JOptionPane.showMessageDialog(this, "Student ID must be a number");
@@ -184,10 +194,10 @@ JOptionPane.showMessageDialog(this, "Student ID must be a number");
         return;
     }
     double marks = database.getMarks(id);
-    String subject;
-    student.setMarks(subject, marks);
+    
+    student.setMarks(marks);
     MarkSheet ms = new MarkSheet(student);
-    String result = ms.generate();
+    double result = ms.generate();
     JOptionPane.showMessageDialog(this, result);
         }
     catch (NumberFormatException e) {
