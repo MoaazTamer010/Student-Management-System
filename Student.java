@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package Student;
+package istudentmanagementsystem;
 
 import java.util.Objects;
 
@@ -27,7 +23,7 @@ public class Student {
     }
 
     // Calculate grade based on average mark
-    private void calculateGrade() {
+    void calculateGrade() {
         if (averageMark >= 90) {
             grade = "A";
         } else if (averageMark >= 80) {
