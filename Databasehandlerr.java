@@ -1,11 +1,5 @@
 
 import java.sql.*;
-/**
- *
- * @author Mohamed
- */
-
-
 
 public class JavaDb {
     private final Connection connection;
@@ -39,6 +33,9 @@ public class JavaDb {
             pstmt.setString(2, name);
             pstmt.executeUpdate();
         }
+        catch (SQLException e ) {
+            System.out.println("Error");
+        }
     }
 
     public void updateGrade(int studentId, String grade) throws SQLException {
@@ -47,6 +44,9 @@ public class JavaDb {
             pstmt.setString(1, grade);
             pstmt.setInt(2, studentId);
             pstmt.executeUpdate();
+        }
+        catch (SQLException e ) {
+            System.out.println("Error");
         }
     }
 
