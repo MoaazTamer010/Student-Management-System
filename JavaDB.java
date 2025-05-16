@@ -13,7 +13,7 @@ public class JavaDb {
 
      private void initializeDatabase() throws SQLException {
         try (Statement stmt = connection.createStatement()) {
-            stmt.execute("CREATE TABLE IF NOT EXISTS students (" +
+            stmt.execute("CREATE TABLE IF NOT EXISTS student (" +
                        "student_id INTEGER(6) PRIMARY KEY, " +
                        "name VARCHAR(100) NOT NULL, " +
                        "grade VARCHAR(1))");
@@ -22,12 +22,24 @@ public class JavaDb {
                        "record_id INTEGER AUTO_INCREMENT PRIMARY KEY, " +
                        "student_id INTEGER, " +
                        "marks int(3) NOT NULL, " +
-                       "FOREIGN KEY (student_id) REFERENCES students(student_id) ON DELETE CASCADE)");
+                       "FOREIGN KEY (student_id) REFERENCES student(student_id) ON DELETE CASCADE)");
         }
     }
 
+    public void addStudent(int id, String name, String mark) throws SQLException {
+        String sql = "INSERT INTO student (student_id, name) VALUES (?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            pstmt.setString(2, name);
+            pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println("Error");
+        }
+    }
+    
     public void addStudent(int id, String name, double mark) throws SQLException {
-        String sql = "INSERT INTO students (student_id, name) VALUES (?, ?)";
+        String sql = "INSERT INTO student (student_id, name) VALUES (?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.setString(2, name);
@@ -39,7 +51,7 @@ public class JavaDb {
     }
 
     public void updateGrade(int studentId, String grade) throws SQLException {
-        String sql = "UPDATE students SET grade = ? WHERE student_id = ?";
+        String sql = "UPDATE student SET grade = ? WHERE student_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, grade);
             pstmt.setInt(2, studentId);
@@ -52,7 +64,7 @@ public class JavaDb {
 
    
     public void updateStudent(int id, String newName, String newMark) throws SQLException {
-        String sql = "UPDATE students SET name = ? WHERE student_id = ?";
+        String sql = "UPDATE student SET name = ? WHERE student_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, newName);
             pstmt.setInt(2, id);
@@ -61,14 +73,14 @@ public class JavaDb {
     }
 
     public void deleteStudent(int id) throws SQLException {
-        String sql = "DELETE FROM students WHERE student_id = ?";
+        String sql = "DELETE FROM student WHERE student_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
         }
     }
 
-    public int getMarks(int studentId) throws SQLException {
+    public double getMarks(int studentId) throws SQLException {
         String sql = "SELECT marks FROM marks WHERE student_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, studentId);
@@ -79,8 +91,8 @@ public class JavaDb {
             return 0; // Return 0 if no marks found
         }
     }
-
-    public void setMarks(int studentId, double marks) throws SQLException {
+    
+    public void setMarks(int studentId,double marks) throws SQLException {
         // First check if marks record exists for this student
         String checkSql = "SELECT record_id FROM marks WHERE student_id = ?";
         try (PreparedStatement checkStmt = connection.prepareStatement(checkSql)) {
@@ -108,7 +120,7 @@ public class JavaDb {
     }
 
     public Student getStudentById(int id) throws SQLException {
-        String sql = "SELECT * FROM students WHERE student_id = ?";
+        String sql = "SELECT * FROM student WHERE student_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -153,6 +165,7 @@ public class JavaDb {
         public String getGrade() {
             return grade;
         }
+        
 
         @Override
         public String toString() {
@@ -162,5 +175,10 @@ public class JavaDb {
                    ", grade='" + grade + '\'' +
                    '}';
         }
+
+        void setMarks(double marks) {
+            throw new IllegalArgumentException("Error");
+        }
     }
 }
+
