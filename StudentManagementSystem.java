@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class StudentManagementSystem {        // class of Mariam
+public class StudentManagementSystem {
     private final JavaDb database;
     private final Scanner scanner;
     private String adminPassword = "admin123"; // Default password
@@ -25,7 +25,7 @@ public class StudentManagementSystem {        // class of Mariam
         System.out.println("5. Exit");
     }
 
-    public void start() {
+    public void start() throws SQLException {
         System.out.print("Enter admin password: ");
         String input = scanner.nextLine();
         if (!input.equals(adminPassword)) {
@@ -50,20 +50,17 @@ public class StudentManagementSystem {        // class of Mariam
         } while (choice != 5);
     }
 
-    private void addStudent() {
+    private void addStudent() throws SQLException {
         try {
             System.out.print("Enter student ID: ");
             int id = Integer.parseInt(scanner.nextLine());
             System.out.print("Enter student name: ");
             String name = scanner.nextLine();
-            database.addStudent(id, name);
+            double mark = 0;
+            database.addStudent(id, name, mark);
             System.out.println("Student added successfully!");
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println("Error adding student: " + e.getMessage());
-        }
-        catch (SQLException e ) {
-            System.out.println("Error");
         }
     }
 
@@ -76,11 +73,13 @@ public class StudentManagementSystem {        // class of Mariam
             database.updateGrade(id, grade);
             System.out.println("Grade updated successfully!");
         } 
+        
         catch (NumberFormatException e) {
             System.out.println("Error updating grade: " + e.getMessage());
         }
+        
         catch (SQLException e ) {
-            System.out.println("Error");
+            
         }
     }
 
@@ -100,8 +99,7 @@ public class StudentManagementSystem {        // class of Mariam
                         rs.getString("grade"));
             }
             System.out.println("------------------------\n");
-        } 
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error displaying students: " + e.getMessage());
         }
     }
