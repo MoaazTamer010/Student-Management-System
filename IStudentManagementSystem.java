@@ -184,7 +184,8 @@ JOptionPane.showMessageDialog(this, "Student ID must be a number");
         return;
     }
     double marks = database.getMarks(id);
-    student.setMarks(marks);
+    String subject;
+    student.setMarks(subject, marks);
     MarkSheet ms = new MarkSheet(student);
     String result = ms.generate();
     JOptionPane.showMessageDialog(this, result);
