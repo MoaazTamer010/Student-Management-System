@@ -49,7 +49,7 @@ public IStudentManagementSystem(){
     add(pnl);
     
     try{
-        String url = "jdbc:mysql://localhost:3309/istudent_db"; 
+        String url = "jdbc:mysql://localhost:3306/istudent_db"; 
         String user = "root"; 
         String password = ""; 
         java.sql.Connection conn = java.sql.DriverManager.getConnection(url, user, password);
@@ -142,7 +142,7 @@ JOptionPane.showMessageDialog(this,"Error"+ e.getMessage());
     JavaDb.Student student = database.getStudentById(id);
     if (student != null) {
         nameField.setText(student.getName());
-        markField.setText(student.getMarks());
+         // markField.setText(student.getMarks());
         JOptionPane.showMessageDialog(this, "Student Found: " + student.getName());
     }
     else {
