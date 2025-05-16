@@ -43,13 +43,14 @@ public class Student {
 
     // Calculate grade based on average mark
     void calculateGrade() {
-        if (averageMark >= 90) {
+        double mark =0.0;
+        if (mark >= 90) {
             grade = "A";
-        } else if (averageMark >= 80) {
+        } else if (mark >= 80) {
             grade = "B";
-        } else if (averageMark >= 70) {
+        } else if (mark >= 70) {
             grade = "C";
-        } else if (averageMark >= 60) {
+        } else if (mark >= 60) {
             grade = "D";
         } else {
             grade = "F";
