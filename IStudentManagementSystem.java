@@ -21,7 +21,7 @@ private JavaDb database;
 
 public IStudentManagementSystem(){
     setTitle("Student Managment System");
-    setSize(500,300);
+    setSize(550,450);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLocationRelativeTo(null);
     
@@ -42,15 +42,14 @@ public IStudentManagementSystem(){
     deleteButton = new JButton("Delete Student");
     markSheetButton = new JButton("Generate Mark Sheet");
     
-    JPanel pnl=new JPanel(new GridLayout(7,2,10,10));
-    pnl.add(idLabel);
-    pnl.add(idField);
-    pnl.add(nameLabel);
-    pnl.add(nameField);
-    pnl.add(mark1Field);
-    pnl.add(mark2Field);
-    pnl.add(mark3Field);
-    pnl.add(new JLabel());
+    JPanel pnl=new JPanel(new GridLayout(8,2,10,10));
+    pnl.add(idLabel); pnl.add(idField);
+    pnl.add(nameLabel); pnl.add(nameField);
+    pnl.add(mark1Label); pnl.add(mark1Field);
+    pnl.add(mark2Label); pnl.add(mark2Field);
+    pnl.add(mark3Label); pnl.add(mark3Field);
+    
+   pnl.add(new JLabel(" ✨MSA loves You ❤️✨"));
     pnl.add(addButton);
     pnl.add(searchButton);
     pnl.add(updateButton);
@@ -59,7 +58,7 @@ public IStudentManagementSystem(){
     add(pnl);
     
     try{
-        String url = "jdbc:mysql://localhost:3306/istudent_db"; 
+        String url = "jdbc:mysql://localhost:3309/istudent_db"; 
         String user = "root"; 
         String password = ""; 
         java.sql.Connection conn = java.sql.DriverManager.getConnection(url, user, password);
@@ -258,4 +257,3 @@ gui.setVisible(true);
  });
     }
 }
-
